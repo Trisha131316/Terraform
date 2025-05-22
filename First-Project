@@ -1,0 +1,35 @@
+Create 2 EC2 instances in Ohio and N.Virginia respectively
+Rename Ohio’s instance to ‘hello-ohio’ and Virginia’s instance to ‘hello-virginia’
+
+
+
+provider "aws"{
+    alias= "ohio"
+    region = "us-east-2"
+    access_key= "AKIAST6S64TTI7LCSZR"
+    secret_key= "Cv/MTAheqgbWPqCaH+PY241DJ3vGetO5OWqALXA"
+}
+
+provider "aws"{
+    alias= "virginia"
+    region= "us-east-1"
+}
+resource "aws_instance" "web-server"{
+    provider= aws.ohio
+    ami= "ami-04f167a56786e4b09"
+    instance_type= "t2.micro"
+    tags= {
+        Name= "hello-ohio"
+    }
+
+}
+
+resource "aws_instance" "ec2"{
+    provider= aws.virginia
+    ami= "ami-0f9de6e2d2f067fca"
+    instance_type= "t2.micro"
+    tags= {
+        Name= "hello-virginia"
+    }
+
+}
